@@ -7,7 +7,7 @@ from ytd.compat import text
 from ytd.compat import quote
 
 user_agent = 'yahoo-ticker-symbol-downloader'
-general_search_characters = 'abcdefghijklmnopqrstuvwxyz0123456789.='
+general_search_characters = 'abcdefghijklmnopqrstuvwxyz'
 first_search_characters = 'abcdefghijklmnopqrstuvwxyz'
 
 class SymbolDownloader:
@@ -25,19 +25,16 @@ class SymbolDownloader:
         self.current_q = self.queries[0]
         self.done = False
 
-    def _add_queries(self, prefix=''):
+    def _add_queries(self, =''):
         # This method will add (prefix+)a...z to self.queries
         # This API requires the first character of the search to be a letter.
         # The second character can be a letter, number, dot, or equals sign.
-        if len(prefix)==0:
-            search_characters = first_search_characters
-        else:
-            search_characters = general_search_characters
-
-        for i in range(len(search_characters)):
-            element = str(prefix) + str(search_characters[i])
+        for i in range(len(general_search_characters)):
+            element = str(prefix) + str(general_search_characters[i])
             if element not in self.queries:  # Avoid having duplicates in list
                 self.queries.append(element)
+		
+	
 
     def _encodeParams(self, params):
         encoded = ''
